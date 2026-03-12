@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Crop Monitoring Reminder</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; margin: 0; padding: 0; color: #1F2937; line-height: 1.6; }
+        .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .header { background-color: #FACC15; padding: 30px 40px; text-align: center; color: #713f12; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        .content { padding: 40px; }
+        .greeting { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+        .task-box { background-color: #fefce8; border: 1px solid #fef08a; border-radius: 12px; padding: 20px; margin-bottom: 15px; }
+        .task-box h3 { margin-top: 0; color: #854d0e; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .footer { background-color: #1F2937; color: #9ca3af; text-align: center; padding: 24px; font-size: 13px; }
+        .footer a { color: #FACC15; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Farm Predict</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px; font-weight: 600;">Daily Field Checklist</p>
+        </div>
+        <div class="content">
+            <div class="greeting">Good morning {{ user.name }},</div>
+            <p>A quick morning reminder to monitor your core crops ({{ user.primary_crops or 'your fields' }}) today to ensure maximum yield potential.</p>
+            
+            <div class="task-box">
+                <h3>🔍 Disease Inspection</h3>
+                <p style="margin-bottom: 0; font-size: 14px; color: #4b5563;">Walk the field perimeters and check the underside of leaves for early signs of fungal infections or pest eggs. Use our AI scanner if you see anything suspicious.</p>
+            </div>
+            
+            <div class="task-box">
+                <h3>💧 Soil & Growth Check</h3>
+                <p style="margin-bottom: 0; font-size: 14px; color: #4b5563;">Verify that recent irrigation efforts have penetrated adequately to the root zones. Check for uniform emergence and growth vigor.</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="http://localhost:5173/dashboard/disease-detection" style="background-color: #ca8a04; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">Open Disease Scanner</a>
+            </div>
+        </div>
+        <div class="footer">
+            <p>You receive these because you have Weekly Tips & Monitoring enabled.</p>
+            <p><a href="http://localhost:5173/profile">Manage Preferences</a></p>
+        </div>
+    </div>
+</body>
+</html>

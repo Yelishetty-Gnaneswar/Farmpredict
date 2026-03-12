@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Predict Weekly Insights</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; margin: 0; padding: 0; color: #1F2937; line-height: 1.6; }
+        .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .header { background-color: #0f766e; padding: 30px 40px; text-align: center; color: white; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        .content { padding: 40px; }
+        .greeting { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+        .tip-card { border-left: 4px solid #14b8a6; padding: 15px 20px; background: #f0fdfa; margin-bottom: 20px; border-radius: 0 8px 8px 0; }
+        .tip-title { font-weight: 700; color: #0f766e; margin-bottom: 5px; font-size: 16px; }
+        .tip-desc { font-size: 14px; color: #4b5563; margin: 0; }
+        .footer { background-color: #1F2937; color: #9ca3af; text-align: center; padding: 24px; font-size: 13px; }
+        .footer a { color: #2dd4bf; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Farm Predict</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">The Weekly Harvest</p>
+        </div>
+        <div class="content">
+            <div class="greeting">Happy Sunday, {{ user.name }}!</div>
+            <p>Welcome to your weekly digest of farming best practices, soil health tips, and agricultural news.</p>
+            
+            <h3 style="margin-top: 30px; font-size: 18px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Weekly Soil & Health Tips</h3>
+            
+            {% for tip in tips %}
+            <div class="tip-card">
+                <div class="tip-title">{{ tip.title }}</div>
+                <p class="tip-desc">{{ tip.description }}</p>
+            </div>
+            {% endfor %}
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="http://localhost:5173/dashboard" style="background-color: #0f766e; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">Explore AI Tools</a>
+            </div>
+        </div>
+        <div class="footer">
+            <p>You receive these because you have Weekly Tips enabled.</p>
+            <p><a href="http://localhost:5173/profile">Manage Preferences</a></p>
+        </div>
+    </div>
+</body>
+</html>

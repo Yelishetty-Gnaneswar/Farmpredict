@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irrigation Reminder for Your Crops</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; margin: 0; padding: 0; color: #1F2937; line-height: 1.6; }
+        .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .header { background-color: #3b82f6; padding: 30px 40px; text-align: center; color: white; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .content { padding: 40px; }
+        .greeting { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+        .alert-box { background-color: #eff6ff; border: 1px solid #dbeafe; border-radius: 12px; padding: 25px; margin: 24px 0; text-align: center; }
+        .moisture-circle { width: 120px; height: 120px; border-radius: 50%; background: white; border: 8px solid #3b82f6; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; }
+        .moisture-val { font-size: 32px; font-weight: 800; color: #1d4ed8; margin-top:28px; }
+        .recommendation { font-size: 16px; font-weight: 600; color: #1e40af; background: white; padding: 12px 20px; border-radius: 8px; display: inline-block; }
+        .footer { background-color: #1F2937; color: #9ca3af; text-align: center; padding: 24px; font-size: 13px; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Farm Predict</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Smart Irrigation Planner</p>
+        </div>
+        <div class="content">
+            <div class="greeting">Hello {{ user.name }},</div>
+            <p>Based on our latest satellite and sensor data for your area, here is your daily irrigation status update.</p>
+            
+            <div class="alert-box">
+                <div class="moisture-circle">
+                    <div class="moisture-val">{{ data.soil_moisture }}%</div>
+                </div>
+                <div style="font-weight: 700; color: #1e40af; margin-bottom: 5px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">Current Soil Moisture</div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="recommendation">
+                        💧 {{ data.recommendation }}
+                    </div>
+                </div>
+            </div>
+
+            <p style="color: #4b5563; font-size: 14px; text-align: center;">Optimal moisture levels help maximize yield and conserve water. Adjust your schedules accordingly.</p>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="http://localhost:5173/dashboard" style="background-color: #3b82f6; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">Open Irrigation Planner</a>
+            </div>
+        </div>
+        <div class="footer">
+            <p>You are receiving this email because you opted into Irrigation Alerts.</p>
+            <p><a href="http://localhost:5173/profile">Manage Preferences</a> | <a href="http://localhost:5173/">Farm Predict</a></p>
+        </div>
+    </div>
+</body>
+</html>
