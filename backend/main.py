@@ -1,6 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
 from . import models, schemas, database
 from .database import engine, get_db
 import bcrypt
@@ -136,7 +142,7 @@ async def forgot_password(request: schemas.ForgotPasswordRequest, db: Session = 
     db.commit()
     
     # Use environment variable for frontend URL, default to localhost
-    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip('/')
     reset_link = f"{frontend_url}/reset-password?token={token}"
     
     # Send actual email

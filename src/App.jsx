@@ -60,6 +60,11 @@ function LandingPage() {
 }
 
 function App() {
+  const location = window.location.pathname;
+  React.useEffect(() => {
+    console.log(`Current route: ${location}`);
+  }, [location]);
+
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
@@ -70,6 +75,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password/" element={<ResetPassword />} />
 
         {/* Protected Dashboard Routes with Shared Layout */}
         <Route
