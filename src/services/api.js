@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '');
 
 const apiRequest = async (endpoint, options = {}) => {
     const token = localStorage.getItem('token');
