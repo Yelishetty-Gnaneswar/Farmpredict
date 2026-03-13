@@ -77,3 +77,13 @@ def send_weekly_farming_tips(user, tips: list):
     template = env.get_template('weekly_tips_email.html')
     html_out = template.render(user=user, tips=tips)
     _send_email(user.email, "Farm Predict Weekly Insights", html_out)
+
+def send_password_reset_email(user, reset_link: str):
+    """
+    Sends a secure password reset link to the user.
+    """
+    if not user.email:
+        return
+    template = env.get_template('password_reset_email.html')
+    html_out = template.render(user=user, reset_link=reset_link)
+    _send_email(user.email, "Reset Your Farm Predict Password", html_out)

@@ -121,13 +121,13 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"access_token": access_token, "token_type": "bearer", "user": user}
 
 import secrets
+from .services import email_service
 
 @app.post("/api/forgot-password")
 async def forgot_password(request: schemas.ForgotPasswordRequest, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.email == request.email).first()
     if not user:
         # For security, don't reveal if user exists. 
-        # But for this task, we want to ensure it works.
         return {"message": "If the email is registered, a reset link will be sent."}
     
     token = secrets.token_urlsafe(32)
@@ -135,8 +135,17 @@ async def forgot_password(request: schemas.ForgotPasswordRequest, db: Session = 
     user.reset_token_expiry = datetime.utcnow() + timedelta(hours=1)
     db.commit()
     
-    # Mock email sending
-    reset_link = f"http://localhost:5173/reset-password?token={token}"
+    # Use environment variable for frontend URL, default to localhost
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    reset_link = f"{frontend_url}/reset-password?token={token}"
+    
+    # Send actual email
+    email_sent = email_service.send_password_reset_email(user, reset_link)
+    
+    if not email_sent:
+        # Log failure but return success message to avoid user confusion/security leaks
+        print(f"FAILED to send reset email to {user.email}")
+    
     print(f"DEBUG: Password reset link for {user.email}: {reset_link}")
     
     return {"message": "Reset link sent successfully."}
