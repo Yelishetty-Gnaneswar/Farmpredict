@@ -45,6 +45,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173", 
         "http://127.0.0.1:5173", 
+        "https://farm-predict.vercel.app", # Specific production domain
         "https://*.vercel.app",
         "*" 
     ],
@@ -138,7 +139,7 @@ async def forgot_password(request: schemas.ForgotPasswordRequest, db: Session = 
     
     token = secrets.token_urlsafe(32)
     user.reset_token = token
-    user.reset_token_expiry = datetime.utcnow() + timedelta(hours=1)
+    user.reset_token_expiry = datetime.utcnow() + timedelta(minutes=30)
     db.commit()
     
     # Use environment variable for frontend URL, default to localhost

@@ -2,13 +2,17 @@ import os
 import smtplib
 from email.message import EmailMessage
 from jinja2 import Environment, FileSystemLoader
-from pydantic import EmailStr
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # SMTP Configuration
 SMTP_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("EMAIL_PORT", "587"))
-SMTP_USER = os.getenv("EMAIL_USER", "yelishettygnaneswar@gmail.com") 
-SMTP_PASSWORD = os.getenv("EMAIL_PASSWORD", "kvzo gpcp fgii gpzd")
+SMTP_USER = os.getenv("EMAIL_USER")
+SMTP_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 # Jinja2 Environment setup
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), '..', 'templates')
@@ -18,8 +22,9 @@ def _send_email(to_email: str, subject: str, html_content: str):
     """
     Internal helper to send an HTML email using smtplib.
     """
-    # For local testing without real credentials, just print that it would send
-    if SMTP_USER == "default@example.com":
+    if not SMTP_USER or not SMTP_PASSWORD:
+        logger.warning(f"SMTP credentials missing. Cannot send email to {to_email}")
+        # For local testing without real credentials, just print that it would send
         print(f"--- FAKE EMAIL SENT TO {to_email} ---")
         print(f"Subject: {subject}")
         print("--- END FAKE EMAIL ---")
@@ -36,11 +41,13 @@ def _send_email(to_email: str, subject: str, html_content: str):
     try:
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
             server.starttls()
-            server.login(SMTP_USER, SMTP_PASSWORD)
+            # Credentials guaranteed by check above
+            server.login(str(SMTP_USER), str(SMTP_PASSWORD))
             server.send_message(msg)
+        logger.info(f"Successfully sent email to {to_email}")
         return True
     except Exception as e:
-        print(f"Failed to send email to {to_email}: {e}")
+        logger.error(f"Failed to send email to {to_email}: {e}")
         return False
 
 def send_weather_alert(user, weather_data: dict):
