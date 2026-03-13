@@ -6,6 +6,17 @@ class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password: str
+    phone: Optional[str] = None
+    location: Optional[str] = None
+    farm_size: Optional[str] = None
+    primary_crops: Optional[str] = None
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
 
 class TokenData(BaseModel):
     email: Optional[str] = None

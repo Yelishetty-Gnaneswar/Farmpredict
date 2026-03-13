@@ -6,7 +6,15 @@ import { User, Mail, Lock, UserPlus, ArrowLeft } from 'lucide-react';
 import api from '../services/api';
 
 const Register = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+    const [formData, setFormData] = useState({ 
+        name: '', 
+        email: '', 
+        password: '',
+        phone: '',
+        location: '',
+        farm_size: '',
+        primary_crops: ''
+    });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -102,6 +110,56 @@ const Register = () => {
                                     className="w-full pl-11 pr-4 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-700 placeholder-slate-400"
                                     placeholder="Create a password"
                                     value={formData.password}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-700 placeholder-slate-400"
+                                    placeholder="e.g. +91 9876543210"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Location</label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-700 placeholder-slate-400"
+                                    placeholder="e.g. Hyderabad, India"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Farm Size (Acres)</label>
+                                <input
+                                    type="text"
+                                    name="farm_size"
+                                    className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-700 placeholder-slate-400"
+                                    placeholder="e.g. 5"
+                                    value={formData.farm_size}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Primary Crops</label>
+                                <input
+                                    type="text"
+                                    name="primary_crops"
+                                    className="w-full px-4 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-700 placeholder-slate-400"
+                                    placeholder="e.g. Rice, Wheat"
+                                    value={formData.primary_crops}
                                     onChange={handleChange}
                                 />
                             </div>

@@ -73,6 +73,10 @@ const api = {
         }
     },
 
+    // Forgot Password flow
+    forgotPassword: (email) => apiRequest('/forgot-password', { method: 'POST', body: JSON.stringify({ email }) }),
+    resetPassword: (token, newPassword) => apiRequest('/reset-password', { method: 'POST', body: JSON.stringify({ token, new_password: newPassword }) }),
+
     // Special case for multipart/form-data (disease detection)
     upload: async (endpoint, formData) => {
         const token = localStorage.getItem('token');

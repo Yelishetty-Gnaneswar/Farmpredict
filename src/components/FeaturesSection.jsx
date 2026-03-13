@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Leaf, TestTube2, CloudSun, TrendingUp, ShieldAlert, LineChart, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const features = [
   {
@@ -7,46 +8,54 @@ const features = [
     title: "Crop Recommendation",
     desc: "AI-driven analysis to recommend the perfect crops based on your soil profile and climate.",
     color: "#16A34A",
-    delay: 0.1
+    delay: 0.1,
+    path: "/predict"
   },
   {
     icon: TestTube2,
     title: "Soil Health Analysis",
     desc: "Understand your soil's nutrient composition with deep-learning based diagnostic tools.",
     color: "#22C55E",
-    delay: 0.2
+    delay: 0.2,
+    path: "/predict" // redirected to same for now or a dedicated one if exists
   },
   {
     icon: CloudSun,
     title: "Weather Insights",
     desc: "Hyper-local weather forecasting with specialized agricultural impact alerts.",
     color: "#38BDF8",
-    delay: 0.3
+    delay: 0.3,
+    path: "/weather-insights"
   },
   {
     icon: TrendingUp,
     title: "Yield Prediction",
     desc: "Predict your harvest quantity and quality using historical data and AI modeling.",
     color: "#FACC15",
-    delay: 0.4
+    delay: 0.4,
+    path: "/yield-prediction"
   },
   {
     icon: ShieldAlert,
     title: "Disease Detection",
     desc: "Scan crop photos to instantly identify pests and diseases before they spread.",
     color: "#EF4444",
-    delay: 0.5
+    delay: 0.5,
+    path: "/disease-detection"
   },
   {
     icon: LineChart,
     title: "Market Insights",
     desc: "Stay ahead with real-time mandi prices and demand forecasting for your produce.",
     color: "#6366F1",
-    delay: 0.6
+    delay: 0.6,
+    path: "/market-insights"
   }
 ];
 
 const FeaturesSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="features" className="py-24 bg-white relative overflow-hidden">
       {/* Decorative background gradients */}
@@ -79,7 +88,8 @@ const FeaturesSection = () => {
               viewport={{ once: true }}
               transition={{ delay: feature.delay }}
               whileHover={{ y: -10 }}
-              className="group p-8 bg-white rounded-[2.5rem] border border-slate-100 hover:border-[#16A34A]/20 transition-all hover:shadow-2xl hover:shadow-[#16A34A]/5"
+              onClick={() => navigate(feature.path)}
+              className="group p-8 bg-white rounded-[2.5rem] border border-slate-100 hover:border-[#16A34A]/20 transition-all hover:shadow-2xl hover:shadow-[#16A34A]/5 cursor-pointer"
             >
               <div 
                 className="w-16 h-16 rounded-2xl mb-8 flex items-center justify-center transition-all group-hover:scale-110 group-hover:rotate-3 shadow-lg text-white"
@@ -91,7 +101,13 @@ const FeaturesSection = () => {
               <p className="text-slate-500 font-medium leading-relaxed mb-6">
                 {feature.desc}
               </p>
-              <button className="flex items-center gap-2 text-slate-400 font-bold text-sm uppercase tracking-widest group-hover:text-[#16A34A] transition-colors">
+              <button 
+                className="flex items-center gap-2 text-slate-400 font-bold text-sm uppercase tracking-widest group-hover:text-[#16A34A] transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(feature.path);
+                }}
+              >
                 Learn More <ChevronRight size={16} />
               </button>
             </motion.div>

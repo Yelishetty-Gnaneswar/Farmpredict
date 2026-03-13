@@ -88,7 +88,15 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     
     hashed_password = get_password_hash(user.password)
-    new_user = models.User(name=user.name, email=user.email, hashed_password=hashed_password)
+    new_user = models.User(
+        name=user.name, 
+        email=user.email, 
+        password_hash=hashed_password,
+        phone=user.phone,
+        location=user.location,
+        farm_size=user.farm_size,
+        primary_crops=user.primary_crops
+    )
     
     db.add(new_user)
     db.commit()
@@ -98,7 +106,7 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @app.post("/api/login", response_model=schemas.Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
-    if not user or not verify_password(form_data.password, user.hashed_password):
+    if not user or not verify_password(form_data.password, user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -111,6 +119,44 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     )
     
     return {"access_token": access_token, "token_type": "bearer", "user": user}
+
+import secrets
+
+@app.post("/api/forgot-password")
+async def forgot_password(request: schemas.ForgotPasswordRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+        # For security, don't reveal if user exists. 
+        # But for this task, we want to ensure it works.
+        return {"message": "If the email is registered, a reset link will be sent."}
+    
+    token = secrets.token_urlsafe(32)
+    user.reset_token = token
+    user.reset_token_expiry = datetime.utcnow() + timedelta(hours=1)
+    db.commit()
+    
+    # Mock email sending
+    reset_link = f"http://localhost:5173/reset-password?token={token}"
+    print(f"DEBUG: Password reset link for {user.email}: {reset_link}")
+    
+    return {"message": "Reset link sent successfully."}
+
+@app.post("/api/reset-password")
+async def reset_password(request: schemas.ResetPasswordRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(
+        models.User.reset_token == request.token,
+        models.User.reset_token_expiry > datetime.utcnow()
+    ).first()
+    
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+    
+    user.password_hash = get_password_hash(request.new_password)
+    user.reset_token = None
+    user.reset_token_expiry = None
+    db.commit()
+    
+    return {"message": "Password updated successfully."}
 
 # ---- NEW ENDPOINTS ----
 

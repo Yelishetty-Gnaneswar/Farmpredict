@@ -9,12 +9,16 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
+    password_hash = Column(String)
     phone = Column(String, nullable=True)
     location = Column(String, nullable=True)
     farm_size = Column(String, nullable=True)
     primary_crops = Column(String, nullable=True)
     profile_image = Column(String, nullable=True)
+    
+    # Password Reset
+    reset_token = Column(String, nullable=True)
+    reset_token_expiry = Column(DateTime, nullable=True)
     
     # Notification Preferences
     enable_weather_alerts = Column(Integer, default=1) # SQLite boolean

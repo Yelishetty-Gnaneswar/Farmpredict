@@ -23,10 +23,23 @@ const Footer = () => {
                             Transforming agriculture through artificial intelligence and real-time field data. Empowering millions of farmers to grow more with less.
                         </p>
                         <div className="flex gap-4">
-                            {[Twitter, Facebook, Instagram, Youtube, Github].map((Icon, idx) => (
-                                <button key={idx} className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#16A34A] hover:text-white transition-all hover:-translate-y-1">
-                                    <Icon size={20} />
-                                </button>
+                            {[
+                                { Icon: Twitter, url: 'https://twitter.com/' },
+                                { Icon: Facebook, url: 'https://facebook.com/' },
+                                { Icon: Instagram, url: 'https://instagram.com/' },
+                                { Icon: Youtube, url: 'https://youtube.com/' },
+                                { Icon: Github, url: 'https://github.com/' },
+                                { Icon: Globe, url: 'https://www.linkedin.com/in/gnaneswar-yelishetty-b32b79278' }
+                            ].map((social, idx) => (
+                                <a 
+                                    key={idx} 
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#16A34A] hover:text-white transition-all hover:-translate-y-1"
+                                >
+                                    <social.Icon size={20} />
+                                </a>
                             ))}
                         </div>
                     </div>
@@ -35,9 +48,14 @@ const Footer = () => {
                     <div className="lg:col-span-2">
                         <h4 className="text-white font-black uppercase tracking-widest text-xs mb-8">Platform</h4>
                         <ul className="space-y-4">
-                            {['Crop Recommendation', 'Yield Prediction', 'Soil Health', 'Market Insights'].map(item => (
-                                <li key={item}>
-                                    <Link to="#" className="text-slate-400 font-bold hover:text-[#16A34A] transition-colors text-sm">{item}</Link>
+                            {[
+                                { name: 'Crop Recommendation', path: '/predict' },
+                                { name: 'Yield Prediction', path: '/yield-prediction' },
+                                { name: 'Soil Health', path: '/predict' },
+                                { name: 'Market Insights', path: '/market-insights' }
+                            ].map(item => (
+                                <li key={item.name}>
+                                    <Link to={item.path} className="text-slate-400 font-bold hover:text-[#16A34A] transition-colors text-sm">{item.name}</Link>
                                 </li>
                             ))}
                         </ul>
@@ -47,9 +65,18 @@ const Footer = () => {
                     <div className="lg:col-span-2">
                         <h4 className="text-white font-black uppercase tracking-widest text-xs mb-8">Resources</h4>
                         <ul className="space-y-4">
-                            {['Documentation', 'Community', 'Govt Schemes', 'Support'].map(item => (
-                                <li key={item}>
-                                    <Link to="#" className="text-slate-400 font-bold hover:text-[#16A34A] transition-colors text-sm">{item}</Link>
+                            {[
+                                { name: 'Documentation', path: '#' },
+                                { name: 'Community', path: '#' },
+                                { name: 'Govt Schemes', path: '/government-schemes' },
+                                { name: 'Support', path: 'mailto:yelishettygnaneswar@gmail.com', external: true }
+                            ].map(item => (
+                                <li key={item.name}>
+                                    {item.external ? (
+                                        <a href={item.path} className="text-slate-400 font-bold hover:text-[#16A34A] transition-colors text-sm">{item.name}</a>
+                                    ) : (
+                                        <Link to={item.path} className="text-slate-400 font-bold hover:text-[#16A34A] transition-colors text-sm">{item.name}</Link>
+                                    )}
                                 </li>
                             ))}
                         </ul>

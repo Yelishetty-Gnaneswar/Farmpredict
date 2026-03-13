@@ -5,7 +5,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./farmpredict.db")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "farmpredict.db")
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{db_path}")
 SQLALCHEMY_DATABASE_URL = DATABASE_URL
 
 engine = create_engine(
