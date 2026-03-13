@@ -192,7 +192,7 @@ const YieldPrediction = () => {
                                 <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-6 shadow-sm border border-slate-100">
                                     <TrendingUp size={40} className="text-slate-300" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-slate-400 mb-2 font-['Outfit']">{t('awaitingParams')}</h3>
+                                <h3 className="text-2xl font-bold text-slate-400 mb-2 font-['Outfit']">{t('awaitingYieldParams')}</h3>
                                 <p className="text-slate-500 font-medium max-w-[320px]">{t('awaitingParamsDesc')}</p>
                             </motion.div>
                         )}
